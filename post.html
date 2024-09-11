@@ -10,6 +10,8 @@
             background-color: #f7f2eb;
             margin: 0;
             padding: 0;
+            position: relative; /* This helps manage the positioning of the fixed elements */
+            min-height: 100vh; /* Ensure the body takes full height of the viewport */
         }
 
         .container {
@@ -26,7 +28,7 @@
         .form-container {
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             gap: 30px;
         }
 
@@ -37,25 +39,46 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            color: white;
+            width: 600px;
+            box-sizing: border-box;
         }
 
-        select, input {
+        select, textarea, input[type="file"], input[type="text"] {
             padding: 10px;
             font-size: 18px;
-            width: 300px;
+            width: 100%;
             margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        .toggle-section {
+            display: flex;
+            gap: 30px;
+            justify-content: space-between;
+        }
+
+        .toggle-section label {
+            font-size: 20px;
+        }
+
+        textarea {
+            min-height: 200px;
+            resize: vertical;
         }
 
         .avatar-preview {
             width: 150px;
             height: 150px;
-            background-color: #555;
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 20px;
+            overflow: hidden;
+        }
+
+        .avatar-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .button {
@@ -68,34 +91,109 @@
             font-size: 18px;
         }
 
+        .back-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
         .gumball-machine {
             width: 100px;
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .footer {
+            height: 60px; /* To avoid content overlapping the fixed buttons */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>ES送信</h1>
+        <h1>アピールする</h1>
         <div class="form-container">
             <div class="form">
-                <label for="department">部門選択</label>
-                <select id="department">
-                    <option value="ポートフォリオ">ポートフォリオ</option>
-                    <option value="なんでもPR">なんでもPR</option>
-                </select>
+                <div class="toggle-section">
+                    <label for="appeal">PRアピール選択</label>
+                    <select id="appeal" onchange="toggleFields()">
+                        <option value="作品">作品</option>
+                        <option value="なんでもPR">なんでもPR</option>
+                    </select>
+                </div>
 
-                <label for="work">作品</label>
-                <input type="text" id="work" placeholder="作品を入力">
+                <!-- Dynamic fields go here -->
+                <div id="dynamicFields">
+                    <!-- Initially, 作品 fields will be displayed -->
+                    <label for="upload">作品録画アップロード</label>
+                    <input type="file" id="upload" accept="image/*">
+                </div>
 
                 <button class="button">ガチャIN</button>
             </div>
 
-            <div class="avatar-preview">image</div>
+            <div class="avatar-preview" id="avatarPreview">
+                <img id="avatarImage" src="" alt="Avatar">
+            </div>
         </div>
-        <img class="gumball-machine" src="gumball.png" alt="Gumball Machine">
+
+        <div class="footer"></div> <!-- Empty footer to prevent content overlap -->
+
+        <!-- Back button -->
+        <button class="back-button" onclick="goBack()">戻る</button>
+        <img class="gumball-machine" src="img/gumball.png" alt="Gumball Machine">
     </div>
+
+    <script>
+        // Function to handle back button action
+        function goBack() {
+            window.history.back();
+        }
+
+        // Function to toggle fields based on the selected appeal
+        function toggleFields() {
+            const appealSelection = document.getElementById('appeal').value;
+            const dynamicFields = document.getElementById('dynamicFields');
+
+            // Clear current fields
+            dynamicFields.innerHTML = '';
+
+            if (appealSelection === '作品') {
+                // Show image upload for 作品
+                dynamicFields.innerHTML = `
+                    <label for="upload">画像アップロード</label>
+                    <input type="file" id="upload" accept="image/*">
+                `;
+            } else if (appealSelection === 'なんでもPR') {
+                // Show title and detailed comment for なんでもPR
+                dynamicFields.innerHTML = `
+                    <label for="title">タイトル</label>
+                    <input type="text" id="title" placeholder="タイトルを入力してください">
+                    <label for="comment">詳しいコメント</label>
+                    <textarea id="comment" placeholder="ここに詳しいコメントを記入してください..."></textarea>
+                `;
+            }
+        }
+
+        // Retrieve the selected avatar from localStorage
+        const selectedAvatar = localStorage.getItem('selectedAvatar');
+        const avatarImage = document.getElementById('avatarImage');
+
+        // Check the selected avatar and display the correct image
+        if (selectedAvatar === 'camera') {
+            avatarImage.src = 'img/camera.png';
+        } else if (selectedAvatar === 'AIcreative') {
+            avatarImage.src = 'img/AIcreative.png';
+        } else {
+            avatarImage.alt = "No avatar selected";
+        }
+    </script>
 </body>
 </html>
