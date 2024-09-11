@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES送信</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f2eb;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #4d6145;
+            font-size: 40px;
+            margin-bottom: 50px;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .form {
+            background-color: #555;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        select, input {
+            padding: 10px;
+            font-size: 18px;
+            width: 300px;
+            margin-bottom: 20px;
+        }
+
+        .avatar-preview {
+            width: 150px;
+            height: 150px;
+            background-color: #555;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .button {
+            background-color: #1976d2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .gumball-machine {
+            width: 100px;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ES送信</h1>
+        <div class="form-container">
+            <div class="form">
+                <label for="department">部門選択</label>
+                <select id="department">
+                    <option value="ポートフォリオ">ポートフォリオ</option>
+                    <option value="なんでもPR">なんでもPR</option>
+                </select>
+
+                <label for="work">作品</label>
+                <input type="text" id="work" placeholder="作品を入力">
+
+                <button class="button">ガチャIN</button>
+            </div>
+
+            <div class="avatar-preview">image</div>
+        </div>
+        <img class="gumball-machine" src="gumball.png" alt="Gumball Machine">
+    </div>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アバター選択</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f2eb;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #4d6145;
+            font-size: 40px;
+            margin-bottom: 50px;
+        }
+
+        .avatars {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            background-color: #555;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .selected {
+            border: 5px solid #1976d2;
+        }
+
+        .button-container {
+            text-align: right;
+        }
+
+        .button {
+            background-color: #1976d2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>アバターを選択してね！</h1>
+        <div class="avatars">
+            <div class="avatar" onclick="selectAvatar('image 1')">image 1</div>
+            <div class="avatar" onclick="selectAvatar('image 2')">image 2</div>
+        </div>
+        <div class="button-container">
+            <button class="button" onclick="confirmAvatar()">アバター決定</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedAvatar = null;
+
+        function selectAvatar(avatar) {
+            // Save the selected avatar to a variable
+            selectedAvatar = avatar;
+
+            // Highlight the selected avatar
+            const avatars = document.querySelectorAll('.avatar');
+            avatars.forEach(a => a.classList.remove('selected'));
+
+            // Add border to the selected avatar
+            event.target.classList.add('selected');
+        }
+
+        function confirmAvatar() {
+            if (selectedAvatar) {
+                // Store the selected avatar in localStorage
+                localStorage.setItem('selectedAvatar', selectedAvatar);
+
+                // Redirect to post.html
+                window.location.href = "/post.html";
+            } else {
+                alert("アバターを選んでください");
+            }
+        }
+    </script>
+</body>
+</html>
